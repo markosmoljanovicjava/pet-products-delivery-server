@@ -19,7 +19,7 @@ import java.util.Properties;
  *
  * @author remar
  */
-public class Broker {
+public class DatabaseBroker {
 
     private Connection connection;
 
@@ -73,22 +73,23 @@ public class Broker {
     }
 
     public DomainObject save(DomainObject domainObject) throws Exception {
-        String query = String.format("INSERT INTO %s (%s) VALUES(%s)",
-                domainObject.getTableName(),
-                domainObject.getAttributeNamesForInsert(),
-                domainObject.getAttributeValuesForInsert());
-
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-
-        if (domainObject.isAutoIncrement()) {
-            ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()) {
-                domainObject.setObjectId(rs.getLong(1));
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("INSERT INTO %s (%s) VALUES(%s)",
+                    domainObject.getTableName(),
+                    domainObject.getAttributeNamesForInsert(),
+                    domainObject.getAttributeValuesForInsert());
+            statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            if (domainObject.isAutoIncrement()) {
+                ResultSet rs = statement.getGeneratedKeys();
+                if (rs.next()) {
+                    domainObject.setObjectId(rs.getLong(1));
+                }
             }
+            return domainObject;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception(ex.getMessage());
         }
-
-        return domainObject;
     }
 
 }

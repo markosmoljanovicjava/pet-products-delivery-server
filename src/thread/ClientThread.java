@@ -5,11 +5,14 @@
  */
 package thread;
 
+import domain.Product;
 import domain.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import logic.SOSaveProduct;
+import logic.SystemOperation;
 import transfer.RequestObject;
 import transfer.ResponseObject;
 import util.Operation;
@@ -51,6 +54,8 @@ public class ClientThread extends Thread {
         switch (operation) {
             case Operation.LOGIN:
                 return login((User) requestObject.getData());
+            case Operation.SAVE_PRODUCT:
+                return saveProduct((Product) requestObject.getData());
         }
         return null;
     }
@@ -63,6 +68,23 @@ public class ClientThread extends Thread {
             responseObject.setStatus(ResponseStatus.SUCCESS);
             loginUser = user;
         } catch (Exception ex) {
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
+    }
+
+    private ResponseObject saveProduct(Product product) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            SystemOperation so = new SOSaveProduct(product);
+            so.execute();
+            Product product1 = (Product) so.getDomainObject();
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+            responseObject.setData(product1);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
             responseObject.setStatus(ResponseStatus.ERROR);
             responseObject.setErrorMessage(ex.getMessage());
         }
