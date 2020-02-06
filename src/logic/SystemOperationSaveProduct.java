@@ -12,7 +12,7 @@ import validator.impl.ValidatorProduct;
  *
  * @author marko
  */
-public class SystemOperationSaveProduct extends SystemOperation {
+public class SystemOperationSaveProduct extends AbstractSystemOperation {
 
     public SystemOperationSaveProduct(Product product) {
         domainObject = product;

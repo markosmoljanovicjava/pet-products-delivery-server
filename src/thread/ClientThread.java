@@ -14,7 +14,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 import logic.SystemOperationSaveProduct;
-import logic.SystemOperation;
+import logic.AbstractSystemOperation;
 import logic.SystemOperationLogin;
 import transfer.RequestObject;
 import transfer.ResponseObject;
@@ -68,7 +68,7 @@ public class ClientThread extends Thread {
     private ResponseObject login(User user) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            SystemOperation so = new SystemOperationLogin(user);
+            AbstractSystemOperation so = new SystemOperationLogin(user);
             so.execute();
             User user1 = (User) so.getDomainObject();
             responseObject.setData(user1);
@@ -85,7 +85,7 @@ public class ClientThread extends Thread {
     private ResponseObject saveProduct(Product product) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            SystemOperation so = new SystemOperationSaveProduct(product);
+            AbstractSystemOperation so = new SystemOperationSaveProduct(product);
             so.execute();
             Product product1 = (Product) so.getDomainObject();
             responseObject.setStatus(ResponseStatus.SUCCESS);

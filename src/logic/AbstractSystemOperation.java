@@ -13,13 +13,13 @@ import validator.Validator;
  *
  * @author marko
  */
-public abstract class SystemOperation {
+public abstract class AbstractSystemOperation {
 
     Validator validator;
     DatabaseBroker databaseBroker;
     DomainObject domainObject;
 
-    public SystemOperation() {
+    public AbstractSystemOperation() {
         databaseBroker = new DatabaseBroker();
     }
 

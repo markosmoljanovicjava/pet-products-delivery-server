@@ -11,7 +11,7 @@ import domain.User;
  *
  * @author marko
  */
-public class SystemOperationLogin extends SystemOperation {
+public class SystemOperationLogin extends AbstractSystemOperation {
 
     public SystemOperationLogin(User user) {
         domainObject = user;
