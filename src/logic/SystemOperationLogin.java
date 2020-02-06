@@ -5,22 +5,21 @@
  */
 package logic;
 
-import domain.Product;
+import domain.User;
 
 /**
  *
  * @author marko
  */
-public class SOSaveProduct extends SystemOperation {
+public class SystemOperationLogin extends SystemOperation {
 
-    public SOSaveProduct(Product product) {
-        domainObject = product;
-        // validator = new ValidatorProduct();
+    public SystemOperationLogin(User user) {
+        domainObject = user;
     }
 
     @Override
     protected void operation() throws Exception {
-        databaseBroker.save(domainObject);
+        databaseBroker.equals(domainObject);
     }
 
 }

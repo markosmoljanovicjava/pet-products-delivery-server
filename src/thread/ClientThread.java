@@ -11,8 +11,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import logic.SOSaveProduct;
+import java.util.HashMap;
+import java.util.Map;
+import logic.SystemOperationSaveProduct;
 import logic.SystemOperation;
+import logic.SystemOperationLogin;
 import transfer.RequestObject;
 import transfer.ResponseObject;
 import util.Operation;
@@ -28,12 +31,14 @@ public class ClientThread extends Thread {
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
 
-    private User loginUser;
+    private final Map<String, Object> map;
 
     public ClientThread(Socket socket) throws IOException {
         this.socket = socket;
         objectInputStream = new ObjectInputStream(socket.getInputStream());
         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+
+        map = new HashMap();
     }
 
     @Override
@@ -63,11 +68,14 @@ public class ClientThread extends Thread {
     private ResponseObject login(User user) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            User user1 = new User("Marko", "Smoljanovic");
+            SystemOperation so = new SystemOperationLogin(user);
+            so.execute();
+            User user1 = (User) so.getDomainObject();
             responseObject.setData(user1);
             responseObject.setStatus(ResponseStatus.SUCCESS);
-            loginUser = user;
+            map.put("user", user1);
         } catch (Exception ex) {
+            ex.printStackTrace();
             responseObject.setStatus(ResponseStatus.ERROR);
             responseObject.setErrorMessage(ex.getMessage());
         }
@@ -77,7 +85,7 @@ public class ClientThread extends Thread {
     private ResponseObject saveProduct(Product product) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            SystemOperation so = new SOSaveProduct(product);
+            SystemOperation so = new SystemOperationSaveProduct(product);
             so.execute();
             Product product1 = (Product) so.getDomainObject();
             responseObject.setStatus(ResponseStatus.SUCCESS);
@@ -95,8 +103,8 @@ public class ClientThread extends Thread {
         return socket;
     }
 
-    public User getLoginUser() {
-        return loginUser;
+    public Map<String, Object> getMap() {
+        return map;
     }
 
 }

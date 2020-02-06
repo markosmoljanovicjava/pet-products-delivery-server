@@ -63,7 +63,7 @@ public class ServerThread extends Thread {
         List<User> users = new ArrayList<>();
 
         for (ClientThread client : clients) {
-            users.add(client.getLoginUser());
+            users.add((User) client.getMap().get("user"));
         }
 
         return users;
