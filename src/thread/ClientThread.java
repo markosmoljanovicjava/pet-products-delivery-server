@@ -5,6 +5,7 @@
  */
 package thread;
 
+import domain.Manufacturer;
 import domain.Product;
 import domain.User;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.Map;
 import logic.SystemOperationSaveProduct;
 import logic.AbstractSystemOperation;
 import logic.SystemOperationLogin;
+import logic.SystsemOperationGetAllManufacturers;
 import transfer.RequestObject;
 import transfer.ResponseObject;
 import util.Operation;
@@ -61,6 +63,8 @@ public class ClientThread extends Thread {
                 return login((User) requestObject.getData());
             case Operation.SAVE_PRODUCT:
                 return saveProduct((Product) requestObject.getData());
+            case Operation.GET_ALL_MANUFACTURERS:
+                return getAllManufacturers();
         }
         return null;
     }
@@ -87,10 +91,23 @@ public class ClientThread extends Thread {
         try {
             AbstractSystemOperation so = new SystemOperationSaveProduct(product);
             so.execute();
-            Product product1 = (Product) so.getDomainObject();
+            responseObject.setData(so.getDomainObject());
             responseObject.setStatus(ResponseStatus.SUCCESS);
-            responseObject.setData(product1);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
+    }
 
+    private ResponseObject getAllManufacturers() {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystsemOperationGetAllManufacturers(new Manufacturer());
+            so.execute();
+            responseObject.setData(so.getDomainObjects());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObject.setStatus(ResponseStatus.ERROR);

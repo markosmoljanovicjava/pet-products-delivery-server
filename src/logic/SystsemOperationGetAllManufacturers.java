@@ -5,21 +5,21 @@
  */
 package logic;
 
-import domain.User;
+import domain.Manufacturer;
 
 /**
  *
  * @author marko
  */
-public class SystemOperationLogin extends AbstractSystemOperation {
+public class SystsemOperationGetAllManufacturers extends AbstractSystemOperation {
 
-    public SystemOperationLogin(User user) {
-        domainObject = user;
+    public SystsemOperationGetAllManufacturers(Manufacturer manufacturer) {
+        domainObject = manufacturer;
     }
 
     @Override
     protected void operation() throws Exception {
-        domainObject = databaseBroker.equals(domainObject);
+        domainObjects = databaseBroker.getAll(domainObject);
     }
 
 }

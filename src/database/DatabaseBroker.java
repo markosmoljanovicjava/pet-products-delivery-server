@@ -6,15 +6,14 @@
 package database;
 
 import domain.DomainObject;
-import domain.User;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,12 +104,25 @@ public class DatabaseBroker {
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
                 if (rs.next()) {
-                    return domainObject;
+                    return domainObject.getObject(rs);
                 }
             }
             throw new Exception(String.format("%s", domainObject.getConditionForEqualsError()));
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public List<DomainObject> getAll(DomainObject domainObject) throws Exception {
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("SELECT * FROM %s",
+                    domainObject.getTableName());
+            System.out.println(query);
+            try (ResultSet rs = statement.executeQuery(query)) {
+                return domainObject.getList(rs);
+            }
+        } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
     }

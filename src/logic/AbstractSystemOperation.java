@@ -7,6 +7,7 @@ package logic;
 
 import database.DatabaseBroker;
 import domain.DomainObject;
+import java.util.List;
 import validator.Validator;
 
 /**
@@ -15,9 +16,10 @@ import validator.Validator;
  */
 public abstract class AbstractSystemOperation {
 
-    Validator validator;
-    DatabaseBroker databaseBroker;
-    DomainObject domainObject;
+    protected Validator validator;
+    protected final DatabaseBroker databaseBroker;
+    protected DomainObject domainObject;
+    protected List<DomainObject> domainObjects;
 
     public AbstractSystemOperation() {
         databaseBroker = new DatabaseBroker();
@@ -55,6 +57,10 @@ public abstract class AbstractSystemOperation {
 
     public DomainObject getDomainObject() {
         return domainObject;
+    }
+
+    public List<DomainObject> getDomainObjects() {
+        return domainObjects;
     }
 
 }
