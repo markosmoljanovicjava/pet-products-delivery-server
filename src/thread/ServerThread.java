@@ -5,6 +5,7 @@
  */
 package thread;
 
+import controller.Controller;
 import domain.User;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -19,11 +20,9 @@ import java.util.List;
 public class ServerThread extends Thread {
 
     private final ServerSocket serverSocket;
-    private final List<ClientThread> clients;
 
     public ServerThread() throws IOException {
         serverSocket = new ServerSocket(9000);
-        clients = new ArrayList<>();
     }
 
     @Override
@@ -33,11 +32,12 @@ public class ServerThread extends Thread {
             try {
                 Socket socket = serverSocket.accept();
                 ClientThread thread = new ClientThread(socket);
-                clients.add(thread);
+                Controller.getInstance().getClients().add(thread);
                 thread.start();
 
                 System.out.println("Client connected");
             } catch (IOException ex) {
+                ex.printStackTrace();
                 System.out.println(ex.getMessage());
             }
         }
@@ -50,10 +50,11 @@ public class ServerThread extends Thread {
     }
 
     private void stopAllThreads() {
-        for (ClientThread client : clients) {
+        for (ClientThread client : Controller.getInstance().getClients()) {
             try {
                 client.getSocket().close();
             } catch (IOException ex) {
+                ex.printStackTrace();
                 System.out.println(ex.getMessage());
             }
         }
@@ -62,7 +63,7 @@ public class ServerThread extends Thread {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
 
-        for (ClientThread client : clients) {
+        for (ClientThread client : Controller.getInstance().getClients()) {
             users.add((User) client.getMap().get("user"));
         }
 

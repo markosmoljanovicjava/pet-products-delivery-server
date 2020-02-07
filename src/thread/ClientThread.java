@@ -5,6 +5,7 @@
  */
 package thread;
 
+import controller.Controller;
 import domain.Manufacturer;
 import domain.Product;
 import domain.User;
@@ -14,6 +15,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.SystemOperationSaveProduct;
 import logic.AbstractSystemOperation;
 import logic.SystemOperationLogin;
@@ -51,7 +54,13 @@ public class ClientThread extends Thread {
                 ResponseObject responseObject = handleRequest(requestObject);
                 objectOutputStream.writeObject(responseObject);
             } catch (IOException | ClassNotFoundException ex) {
-                System.out.println(ex.getMessage());
+                try {
+                    socket.close();
+                    System.out.println(String.format("%s disconnected!", map.get("user")));
+                    Controller.getInstance().getClients().remove(this);
+                } catch (IOException ex1) {
+                    ex1.printStackTrace();
+                }
             }
         }
     }

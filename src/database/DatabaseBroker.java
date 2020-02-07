@@ -98,7 +98,7 @@ public class DatabaseBroker {
 
     public DomainObject equals(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
-            String query = String.format("SELECT * from %s WHERE %s",
+            String query = String.format("SELECT * FROM %s WHERE %s",
                     domainObject.getTableName(),
                     domainObject.getConditionForEquals());
             System.out.println(query);
