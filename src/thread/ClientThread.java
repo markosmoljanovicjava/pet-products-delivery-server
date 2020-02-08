@@ -15,14 +15,15 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logic.SystemOperationSaveProduct;
 import logic.AbstractSystemOperation;
+import logic.SystemOperationGetAllProducts;
 import logic.SystemOperationLogin;
+import logic.SystemOperationUpdateProduct;
 import logic.SystsemOperationGetAllManufacturers;
 import transfer.RequestObject;
 import transfer.ResponseObject;
+import util.Keys;
 import util.Operation;
 import util.ResponseStatus;
 
@@ -36,7 +37,7 @@ public class ClientThread extends Thread {
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
 
-    private final Map<String, Object> map;
+    private final Map<Integer, Object> map;
 
     public ClientThread(Socket socket) throws IOException {
         this.socket = socket;
@@ -65,6 +66,14 @@ public class ClientThread extends Thread {
         }
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public Map<Integer, Object> getMap() {
+        return map;
+    }
+
     private ResponseObject handleRequest(RequestObject requestObject) {
         int operation = requestObject.getOperation();
         switch (operation) {
@@ -74,6 +83,10 @@ public class ClientThread extends Thread {
                 return saveProduct((Product) requestObject.getData());
             case Operation.GET_ALL_MANUFACTURERS:
                 return getAllManufacturers();
+            case Operation.UPDATE_PRODUCT:
+                return updateProducts((Product) requestObject.getData());
+            case Operation.GET_ALL_PRODUCTS:
+                return getAllProducts();
         }
         return null;
     }
@@ -86,7 +99,7 @@ public class ClientThread extends Thread {
             User user1 = (User) so.getDomainObject();
             responseObject.setData(user1);
             responseObject.setStatus(ResponseStatus.SUCCESS);
-            map.put("user", user1);
+            map.put(Keys.USER, user1);
         } catch (Exception ex) {
             ex.printStackTrace();
             responseObject.setStatus(ResponseStatus.ERROR);
@@ -125,12 +138,34 @@ public class ClientThread extends Thread {
         return responseObject;
     }
 
-    public Socket getSocket() {
-        return socket;
+    private ResponseObject updateProducts(Product product) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystemOperationUpdateProduct(product);
+            so.execute();
+            responseObject.setData(so.getDomainObject());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
     }
 
-    public Map<String, Object> getMap() {
-        return map;
+    private ResponseObject getAllProducts() {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystemOperationGetAllProducts(new Product());
+            so.execute();
+            responseObject.setData(so.getDomainObjects());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
     }
 
 }
