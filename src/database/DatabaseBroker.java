@@ -139,20 +139,34 @@ public class DatabaseBroker {
             throw new Exception(ex.getMessage());
         }
     }
-    
+
     public List<DomainObject> getAllJoin(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
 //            String query1 = "SELECT product.id, product.name, product.price,"
 //                    + " manufacturer.id, manufacturer.name, manufacturer.adress, manufacturer.phoneNumber FROM product product"
 //                    + " INNER JOIN manufacturer manufacturer ON product.manufacturer = manufacturer.id";
-            String query = String.format("SELECT %s FROM %s %s",
+            String query = String.format("SELECT %s FROM %s %s ORDER BY %s",
                     domainObject.getAttributeNamesForJoin(),
                     domainObject.getTableNameForJoin(),
-                    domainObject.getConditionForJoin());
+                    domainObject.getConditionForJoin(),
+                    domainObject.getORDERBYForJoin());
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
                 return domainObject.getList(rs);
             }
+        } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public DomainObject delete(DomainObject domainObject) throws Exception {
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("DELETE FROM %s WHERE %s",
+                    domainObject.getTableName(),
+                    domainObject.getConditionForEquals());
+            System.out.println(query);
+            statement.executeUpdate(query);
+            return domainObject;
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }

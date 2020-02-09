@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import logic.SystemOperationSaveProduct;
 import logic.AbstractSystemOperation;
+import logic.SystemOperationDeleteProduct;
 import logic.SystemOperationGetAllProducts;
 import logic.SystemOperationLogin;
 import logic.SystemOperationUpdateProduct;
@@ -57,7 +58,7 @@ public class ClientThread extends Thread {
             } catch (IOException | ClassNotFoundException ex) {
                 try {
                     socket.close();
-                    System.out.println(String.format("%s disconnected!", map.get("user")));
+                    System.out.println(String.format("%s disconnected!", map.get(Keys.USER)));
                     Controller.getInstance().getClients().remove(this);
                 } catch (IOException ex1) {
                     ex1.printStackTrace();
@@ -87,6 +88,8 @@ public class ClientThread extends Thread {
                 return updateProducts((Product) requestObject.getData());
             case Operation.GET_ALL_PRODUCTS:
                 return getAllProducts();
+            case Operation.DELETE_PRODUCT:
+                return deleteProduct((Product) requestObject.getData());
         }
         return null;
     }
@@ -159,6 +162,21 @@ public class ClientThread extends Thread {
             AbstractSystemOperation so = new SystemOperationGetAllProducts(new Product());
             so.execute();
             responseObject.setData(so.getDomainObjects());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
+    }
+
+    private ResponseObject deleteProduct(Product product) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystemOperationDeleteProduct(product);
+            so.execute();
+            responseObject.setData(so.getDomainObject());
             responseObject.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception ex) {
             ex.printStackTrace();
