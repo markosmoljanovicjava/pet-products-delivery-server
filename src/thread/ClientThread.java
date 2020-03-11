@@ -6,6 +6,7 @@
 package thread;
 
 import controller.Controller;
+import domain.Customer;
 import domain.Manufacturer;
 import domain.Product;
 import domain.User;
@@ -18,6 +19,7 @@ import java.util.Map;
 import logic.SystemOperationSaveProduct;
 import logic.AbstractSystemOperation;
 import logic.SystemOperationDeleteProduct;
+import logic.SystemOperationGetAllCustomers;
 import logic.SystemOperationGetAllProducts;
 import logic.SystemOperationLogin;
 import logic.SystemOperationUpdateProduct;
@@ -90,6 +92,8 @@ public class ClientThread extends Thread {
                 return getAllProducts();
             case Operation.DELETE_PRODUCT:
                 return deleteProduct((Product) requestObject.getData());
+            case Operation.GET_ALL_CUSTOMERS:
+                return getAllCustomers();
         }
         return null;
     }
@@ -177,6 +181,21 @@ public class ClientThread extends Thread {
             AbstractSystemOperation so = new SystemOperationDeleteProduct(product);
             so.execute();
             responseObject.setData(so.getDomainObject());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
+    }
+
+    private ResponseObject getAllCustomers() {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystemOperationGetAllCustomers(new Customer());
+            so.execute();
+            responseObject.setData(so.getDomainObjects());
             responseObject.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception ex) {
             ex.printStackTrace();
