@@ -172,4 +172,21 @@ public class DatabaseBroker {
         }
     }
 
+    public List<DomainObject> getAllJoinWhere(DomainObject domainObject) throws Exception {
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("SELECT %s FROM %s %s WHERE %s ORDER BY %s",
+                    domainObject.getAttributeNamesForJoin(),
+                    domainObject.getTableNameForJoin(),
+                    domainObject.getConditionForJoin(),
+                    domainObject.getConditionForWhere(),
+                    domainObject.getORDERBYForJoin());
+            System.out.println(query);
+            try (ResultSet rs = statement.executeQuery(query)) {
+                return domainObject.getList(rs);
+            }
+        } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
 }

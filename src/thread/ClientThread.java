@@ -21,6 +21,7 @@ import logic.AbstractSystemOperation;
 import logic.SystemOperationDeleteProduct;
 import logic.SystemOperationGetAllCustomers;
 import logic.SystemOperationGetAllProducts;
+import logic.SystemOperationGetAllProductsForManufacturer;
 import logic.SystemOperationLogin;
 import logic.SystemOperationUpdateProduct;
 import logic.SystsemOperationGetAllManufacturers;
@@ -94,6 +95,8 @@ public class ClientThread extends Thread {
                 return deleteProduct((Product) requestObject.getData());
             case Operation.GET_ALL_CUSTOMERS:
                 return getAllCustomers();
+            case Operation.GET_ALL_PRODUCST_FOR_MANUFACTURER:
+                return getAllProductsForManufacturer((Product) requestObject.getData());
         }
         return null;
     }
@@ -194,6 +197,21 @@ public class ClientThread extends Thread {
         ResponseObject responseObject = new ResponseObject();
         try {
             AbstractSystemOperation so = new SystemOperationGetAllCustomers(new Customer());
+            so.execute();
+            responseObject.setData(so.getDomainObjects());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
+    }
+
+    private ResponseObject getAllProductsForManufacturer(Product product) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystemOperationGetAllProductsForManufacturer(product);
             so.execute();
             responseObject.setData(so.getDomainObjects());
             responseObject.setStatus(ResponseStatus.SUCCESS);
