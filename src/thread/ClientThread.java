@@ -6,6 +6,7 @@
 package thread;
 
 import controller.Controller;
+import domain.Contract;
 import domain.Customer;
 import domain.Manufacturer;
 import domain.Product;
@@ -23,6 +24,7 @@ import logic.SystemOperationGetAllCustomers;
 import logic.SystemOperationGetAllProducts;
 import logic.SystemOperationGetAllProductsForManufacturer;
 import logic.SystemOperationLogin;
+import logic.SystemOperationSaveContract;
 import logic.SystemOperationUpdateProduct;
 import logic.SystsemOperationGetAllManufacturers;
 import transfer.RequestObject;
@@ -97,6 +99,8 @@ public class ClientThread extends Thread {
                 return getAllCustomers();
             case Operation.GET_ALL_PRODUCST_FOR_MANUFACTURER:
                 return getAllProductsForManufacturer((Product) requestObject.getData());
+            case Operation.SAVE_CONTRACT:
+                return saveContract((Contract) requestObject.getData());
         }
         return null;
     }
@@ -214,6 +218,21 @@ public class ClientThread extends Thread {
             AbstractSystemOperation so = new SystemOperationGetAllProductsForManufacturer(product);
             so.execute();
             responseObject.setData(so.getDomainObjects());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
+    }
+
+    private ResponseObject saveContract(Contract contract) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystemOperationSaveContract(contract);
+            so.execute();
+            responseObject.setData(so.getDomainObject());
             responseObject.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception ex) {
             ex.printStackTrace();
