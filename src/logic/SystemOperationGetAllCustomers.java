@@ -11,7 +11,7 @@ import domain.Customer;
  *
  * @author marko
  */
-public class SystemOperationGetAllCustomers extends AbstractSystemOperation{
+public class SystemOperationGetAllCustomers extends AbstractSystemOperation {
 
     public SystemOperationGetAllCustomers(Customer customer) {
         domainObject = customer;
@@ -21,5 +21,5 @@ public class SystemOperationGetAllCustomers extends AbstractSystemOperation{
     protected void operation() throws Exception {
         domainObjects = databaseBroker.getAll(domainObject);
     }
-    
+
 }

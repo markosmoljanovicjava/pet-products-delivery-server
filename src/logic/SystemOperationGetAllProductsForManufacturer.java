@@ -11,7 +11,7 @@ import domain.Product;
  *
  * @author marko
  */
-public class SystemOperationGetAllProductsForManufacturer extends AbstractSystemOperation{
+public class SystemOperationGetAllProductsForManufacturer extends AbstractSystemOperation {
 
     public SystemOperationGetAllProductsForManufacturer(Product product) {
         domainObject = product;
@@ -21,5 +21,5 @@ public class SystemOperationGetAllProductsForManufacturer extends AbstractSystem
     protected void operation() throws Exception {
         domainObjects = databaseBroker.getAllJoinWhere(domainObject);
     }
-    
+
 }
