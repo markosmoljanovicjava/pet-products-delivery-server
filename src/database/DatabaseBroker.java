@@ -178,7 +178,7 @@ public class DatabaseBroker {
                     domainObject.getAttributeNamesForJoin(),
                     domainObject.getTableNameForJoin(),
                     domainObject.getConditionForJoin(),
-                    domainObject.getConditionForWhere(),
+                    domainObject.getConditionForWhere(domainObject),
                     domainObject.getORDERBYForJoin());
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
