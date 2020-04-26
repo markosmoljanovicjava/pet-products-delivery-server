@@ -135,6 +135,21 @@ public class DatabaseBroker {
         }
     }
 
+    public List<DomainObject> selectWhere(DomainObject domainObject) throws Exception {
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("SELECT * FROM %s WHERE %s",
+                    domainObject.getTableName(),
+                    domainObject.getWhere(domainObject, false));
+            System.out.println(query);
+            try (ResultSet rs = statement.executeQuery(query)) {
+                return domainObject.getList(rs);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new Exception(ex.getMessage());
+        }
+    }
+
     public List<DomainObject> selectJoin(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT %s FROM %s %s ORDER BY %s",
@@ -167,20 +182,4 @@ public class DatabaseBroker {
             throw new Exception(ex.getMessage());
         }
     }
-
-    public List<DomainObject> selectWhere(DomainObject domainObject) throws Exception {
-        try (Statement statement = connection.createStatement()) {
-            String query = String.format("SELECT * FROM %s WHERE %s",
-                    domainObject.getTableName(),
-                    domainObject.getWhere(domainObject, false));
-            System.out.println(query);
-            try (ResultSet rs = statement.executeQuery(query)) {
-                return domainObject.getList(rs);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new Exception(ex.getMessage());
-        }
-    }
-
 }
