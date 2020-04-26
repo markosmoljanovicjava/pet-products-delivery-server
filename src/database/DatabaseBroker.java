@@ -142,9 +142,6 @@ public class DatabaseBroker {
 
     public List<DomainObject> getAllJoin(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
-//            String query1 = "SELECT product.id, product.name, product.price,"
-//                    + " manufacturer.id, manufacturer.name, manufacturer.adress, manufacturer.phoneNumber FROM product product"
-//                    + " INNER JOIN manufacturer manufacturer ON product.manufacturer = manufacturer.id";
             String query = String.format("SELECT %s FROM %s %s ORDER BY %s",
                     domainObject.getAttributeNamesForJoin(),
                     domainObject.getTableNameForJoin(),
