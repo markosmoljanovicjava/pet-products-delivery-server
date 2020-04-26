@@ -98,7 +98,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("UPDATE %s SET %s WHERE id = %s",
                     domainObject.getTableName(),
-                    domainObject.getSET(),
+                    domainObject.getSet(),
                     domainObject.getObjectId());
             statement.executeUpdate(query);
             System.out.println(query);
