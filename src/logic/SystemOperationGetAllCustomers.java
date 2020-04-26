@@ -19,7 +19,7 @@ public class SystemOperationGetAllCustomers extends AbstractSystemOperation {
 
     @Override
     protected void operation() throws Exception {
-        domainObjects = databaseBroker.getAll(domainObject);
+        domainObjects = databaseBroker.select(domainObject);
     }
 
 }

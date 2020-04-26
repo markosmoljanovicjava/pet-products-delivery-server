@@ -19,7 +19,7 @@ public class SystemOperationGetAllProductsForManufacturer extends AbstractSystem
 
     @Override
     protected void operation() throws Exception {
-        domainObjects = databaseBroker.getAllJoinWhere(domainObject);
+        domainObjects = databaseBroker.selectJoinWhere(domainObject);
     }
 
 }

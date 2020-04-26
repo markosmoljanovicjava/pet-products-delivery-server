@@ -122,25 +122,7 @@ public class DatabaseBroker {
         }
     }
 
-    public DomainObject equals(DomainObject domainObject) throws Exception {
-        try (Statement statement = connection.createStatement()) {
-            String query = String.format("SELECT * FROM %s WHERE %s",
-                    domainObject.getTableName(),
-                    domainObject.getConditionForEquals());
-            System.out.println(query);
-            try (ResultSet rs = statement.executeQuery(query)) {
-                if (rs.next()) {
-                    return domainObject.getObject(rs);
-                }
-            }
-            throw new Exception(String.format("%s", domainObject.getConditionForEqualsError()));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new Exception(ex.getMessage());
-        }
-    }
-
-    public List<DomainObject> getAll(DomainObject domainObject) throws Exception {
+    public List<DomainObject> select(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT * FROM %s",
                     domainObject.getTableName());
@@ -153,7 +135,7 @@ public class DatabaseBroker {
         }
     }
 
-    public List<DomainObject> getAllJoin(DomainObject domainObject) throws Exception {
+    public List<DomainObject> selectJoin(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT %s FROM %s %s ORDER BY %s",
                     domainObject.getAttributeNamesForJoin(),
@@ -169,7 +151,7 @@ public class DatabaseBroker {
         }
     }
 
-    public List<DomainObject> getAllJoinWhere(DomainObject domainObject) throws Exception {
+    public List<DomainObject> selectJoinWhere(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT %s FROM %s %s WHERE %s ORDER BY %s",
                     domainObject.getAttributeNamesForJoin(),
@@ -182,6 +164,24 @@ public class DatabaseBroker {
                 return domainObject.getList(rs);
             }
         } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public DomainObject equals(DomainObject domainObject) throws Exception {
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("SELECT * FROM %s WHERE %s",
+                    domainObject.getTableName(),
+                    domainObject.getConditionForEquals());
+            System.out.println(query);
+            try (ResultSet rs = statement.executeQuery(query)) {
+                if (rs.next()) {
+                    return domainObject.getObject(rs);
+                }
+            }
+            throw new Exception(String.format("%s", domainObject.getConditionForEqualsError()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
             throw new Exception(ex.getMessage());
         }
     }
