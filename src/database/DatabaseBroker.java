@@ -139,7 +139,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT %s FROM %s %s ORDER BY %s",
                     domainObject.getAttributeNamesForJoin(),
-                    domainObject.getTableNameForJoin(),
+                    domainObject.getTableName(),
                     domainObject.getConditionForJoin(),
                     domainObject.getORDERBYForJoin());
             System.out.println(query);
@@ -155,7 +155,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT %s FROM %s %s WHERE %s ORDER BY %s",
                     domainObject.getAttributeNamesForJoin(),
-                    domainObject.getTableNameForJoin(),
+                    domainObject.getTableName(),
                     domainObject.getConditionForJoin(),
                     domainObject.getWhere(domainObject, true),
                     domainObject.getORDERBYForJoin());
