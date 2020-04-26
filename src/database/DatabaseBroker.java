@@ -96,10 +96,10 @@ public class DatabaseBroker {
 
     public DomainObject update(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
-            String query = String.format("UPDATE %s SET %s WHERE %s",
+            String query = String.format("UPDATE %s SET %s WHERE id = %s",
                     domainObject.getTableName(),
                     domainObject.getSET(),
-                    domainObject.getWHERE());
+                    domainObject.getObjectId());
             statement.executeUpdate(query);
             System.out.println(query);
             return domainObject;
@@ -113,7 +113,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("DELETE FROM %s WHERE %s",
                     domainObject.getTableName(),
-                    domainObject.getConditionWhere(domainObject, false));
+                    domainObject.getWhere(domainObject, false));
             System.out.println(query);
             statement.executeUpdate(query);
             return domainObject;
@@ -157,7 +157,7 @@ public class DatabaseBroker {
                     domainObject.getAttributeNamesForJoin(),
                     domainObject.getTableNameForJoin(),
                     domainObject.getConditionForJoin(),
-                    domainObject.getConditionWhere(domainObject, true),
+                    domainObject.getWhere(domainObject, true),
                     domainObject.getORDERBYForJoin());
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
@@ -172,7 +172,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT * FROM %s WHERE %s",
                     domainObject.getTableName(),
-                    domainObject.getConditionWhere(domainObject, false));
+                    domainObject.getWhere(domainObject, false));
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
                 return domainObject.getList(rs);
