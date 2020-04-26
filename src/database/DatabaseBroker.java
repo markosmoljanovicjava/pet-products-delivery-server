@@ -77,8 +77,8 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("INSERT INTO %s (%s) VALUES(%s)",
                     domainObject.getTableName(),
-                    domainObject.getAttributeNamesForInsert(),
-                    domainObject.getAttributeValuesForInsert());
+                    domainObject.getAttributeNamesInsert(),
+                    domainObject.getAttributeValuesInsert());
             System.out.println(query);
             statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             if (domainObject.isAutoIncrement()) {
