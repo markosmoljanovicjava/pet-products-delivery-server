@@ -138,10 +138,10 @@ public class DatabaseBroker {
     public List<DomainObject> selectJoin(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT %s FROM %s %s ORDER BY %s",
-                    domainObject.getAttributeNamesForJoin(),
+                    domainObject.getAttributeNamesJoin(),
                     domainObject.getTableName(),
-                    domainObject.getConditionForJoin(),
-                    domainObject.getORDERBYForJoin());
+                    domainObject.getJoin(),
+                    domainObject.getOrderBy(true));
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
                 return domainObject.getList(rs);
@@ -154,11 +154,11 @@ public class DatabaseBroker {
     public List<DomainObject> selectJoinWhere(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT %s FROM %s %s WHERE %s ORDER BY %s",
-                    domainObject.getAttributeNamesForJoin(),
+                    domainObject.getAttributeNamesJoin(),
                     domainObject.getTableName(),
-                    domainObject.getConditionForJoin(),
+                    domainObject.getJoin(),
                     domainObject.getWhere(domainObject, true),
-                    domainObject.getORDERBYForJoin());
+                    domainObject.getOrderBy(true));
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
                 return domainObject.getList(rs);
