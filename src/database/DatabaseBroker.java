@@ -109,6 +109,19 @@ public class DatabaseBroker {
         }
     }
 
+    public DomainObject delete(DomainObject domainObject) throws Exception {
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("DELETE FROM %s WHERE %s",
+                    domainObject.getTableName(),
+                    domainObject.getConditionForEquals());
+            System.out.println(query);
+            statement.executeUpdate(query);
+            return domainObject;
+        } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
     public DomainObject equals(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT * FROM %s WHERE %s",
@@ -151,19 +164,6 @@ public class DatabaseBroker {
             try (ResultSet rs = statement.executeQuery(query)) {
                 return domainObject.getList(rs);
             }
-        } catch (SQLException ex) {
-            throw new Exception(ex.getMessage());
-        }
-    }
-
-    public DomainObject delete(DomainObject domainObject) throws Exception {
-        try (Statement statement = connection.createStatement()) {
-            String query = String.format("DELETE FROM %s WHERE %s",
-                    domainObject.getTableName(),
-                    domainObject.getConditionForEquals());
-            System.out.println(query);
-            statement.executeUpdate(query);
-            return domainObject;
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
