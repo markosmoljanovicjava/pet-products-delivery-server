@@ -19,7 +19,7 @@ public class SystemOperationLogin extends AbstractSystemOperation {
 
     @Override
     protected void operation() throws Exception {
-        domainObject = databaseBroker.equals(domainObject);
+        domainObjects = databaseBroker.selectWhere(domainObject);
     }
 
 }

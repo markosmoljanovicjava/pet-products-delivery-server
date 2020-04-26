@@ -113,7 +113,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("DELETE FROM %s WHERE %s",
                     domainObject.getTableName(),
-                    domainObject.getConditionForEquals());
+                    domainObject.getConditionSelectWhere());
             System.out.println(query);
             statement.executeUpdate(query);
             return domainObject;
@@ -168,18 +168,15 @@ public class DatabaseBroker {
         }
     }
 
-    public DomainObject equals(DomainObject domainObject) throws Exception {
+    public List<DomainObject> selectWhere(DomainObject domainObject) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT * FROM %s WHERE %s",
                     domainObject.getTableName(),
-                    domainObject.getConditionForEquals());
+                    domainObject.getConditionSelectWhere1(domainObject));
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
-                if (rs.next()) {
-                    return domainObject.getObject(rs);
-                }
+                return domainObject.getList(rs);
             }
-            throw new Exception(String.format("%s", domainObject.getConditionForEqualsError()));
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new Exception(ex.getMessage());

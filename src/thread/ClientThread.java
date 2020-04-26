@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import logic.SystemOperationSaveProduct;
 import logic.AbstractSystemOperation;
@@ -110,7 +111,11 @@ public class ClientThread extends Thread {
         try {
             AbstractSystemOperation so = new SystemOperationLogin(user);
             so.execute();
-            User user1 = (User) so.getDomainObject();
+            List<User> users = (List<User>) (List<?>) so.getDomainObjects();
+            if (users.isEmpty()) {
+                throw new Exception("Your login credentials don't match an account in our system.");
+            }
+            User user1 = users.get(0);
             responseObject.setData(user1);
             responseObject.setStatus(ResponseStatus.SUCCESS);
             map.put(Keys.USER, user1);
