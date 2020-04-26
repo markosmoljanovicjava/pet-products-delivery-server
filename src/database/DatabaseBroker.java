@@ -113,7 +113,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("DELETE FROM %s WHERE %s",
                     domainObject.getTableName(),
-                    domainObject.getConditionSelectWhere());
+                    domainObject.getConditionWhere(domainObject, false));
             System.out.println(query);
             statement.executeUpdate(query);
             return domainObject;
@@ -157,7 +157,7 @@ public class DatabaseBroker {
                     domainObject.getAttributeNamesForJoin(),
                     domainObject.getTableNameForJoin(),
                     domainObject.getConditionForJoin(),
-                    domainObject.getConditionForWhere(domainObject),
+                    domainObject.getConditionWhere(domainObject, true),
                     domainObject.getORDERBYForJoin());
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
@@ -172,7 +172,7 @@ public class DatabaseBroker {
         try (Statement statement = connection.createStatement()) {
             String query = String.format("SELECT * FROM %s WHERE %s",
                     domainObject.getTableName(),
-                    domainObject.getConditionSelectWhere1(domainObject));
+                    domainObject.getConditionWhere(domainObject, false));
             System.out.println(query);
             try (ResultSet rs = statement.executeQuery(query)) {
                 return domainObject.getList(rs);
