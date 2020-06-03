@@ -64,7 +64,9 @@ public class ClientThread extends Thread {
             } catch (IOException | ClassNotFoundException ex) {
                 try {
                     socket.close();
-                    System.out.println(String.format("%s disconnected!", map.get(Keys.USER)));
+                    if (map.get(Keys.USER) != null) {
+                        System.out.println(String.format("%s disconnected!", map.get(Keys.USER)));
+                    }
                     Controller.getInstance().getClients().remove(this);
                 } catch (IOException ex1) {
                     ex1.printStackTrace();
