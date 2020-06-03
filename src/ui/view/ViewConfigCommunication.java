@@ -12,12 +12,13 @@ import javax.swing.JTextField;
  *
  * @author marko
  */
-public class ViewConfigCommunication extends javax.swing.JFrame {
+public class ViewConfigCommunication extends javax.swing.JDialog {
 
     /**
      * Creates new form ViewConfigCommunication
      */
-    public ViewConfigCommunication() {
+    public ViewConfigCommunication(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -34,7 +35,7 @@ public class ViewConfigCommunication extends javax.swing.JFrame {
         jTextFieldPort = new javax.swing.JTextField();
         jButtonSave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelPort.setText("Port:");
 

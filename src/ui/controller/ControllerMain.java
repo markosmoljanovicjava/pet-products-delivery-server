@@ -55,14 +55,14 @@ public class ControllerMain {
         viewMain.getjMenuItemDatabase().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControllerConfigDatabase controllerConfigDatabase = new ControllerConfigDatabase(new ViewConfigDatabase());
+                ControllerConfigDatabase controllerConfigDatabase = new ControllerConfigDatabase(new ViewConfigDatabase(viewMain, true));
                 controllerConfigDatabase.open();
             }
         });
         viewMain.getjMenuItemCommunication().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControllerConfigCommunication controllerConfigCommunication = new ControllerConfigCommunication(new ViewConfigCommunication());
+                ControllerConfigCommunication controllerConfigCommunication = new ControllerConfigCommunication(new ViewConfigCommunication(viewMain, true));
                 controllerConfigCommunication.open();
             }
         });

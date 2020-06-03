@@ -11,12 +11,13 @@ import javax.swing.JButton;
  *
  * @author marko
  */
-public class ViewConfigDatabase extends javax.swing.JFrame {
+public class ViewConfigDatabase extends javax.swing.JDialog {
 
     /**
      * Creates new form ViewConfigDB
      */
-    public ViewConfigDatabase() {
+    public ViewConfigDatabase(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -39,7 +40,7 @@ public class ViewConfigDatabase extends javax.swing.JFrame {
         jTextFieldPassword = new javax.swing.JTextField();
         jButtonSave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Database Configuration");
 
         jLabelDriver.setText("Driver");
