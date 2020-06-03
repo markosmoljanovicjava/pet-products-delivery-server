@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import thread.ServerThread;
+import ui.view.ViewConfigDatabase;
 import ui.view.ViewMain;
 
 /**
@@ -48,6 +49,13 @@ public class ControllerMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 stop();
+            }
+        });
+        viewMain.getjMenuItemDatabase().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControllerConfigDatabase controllerConfigDatabase = new ControllerConfigDatabase(new ViewConfigDatabase());
+                controllerConfigDatabase.open();
             }
         });
     }

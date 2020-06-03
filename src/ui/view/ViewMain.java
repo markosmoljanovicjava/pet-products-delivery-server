@@ -5,6 +5,8 @@
  */
 package ui.view;
 
+import javax.swing.JMenuItem;
+
 /**
  *
  * @author marko
@@ -32,6 +34,7 @@ public class ViewMain extends javax.swing.JFrame {
         jMenuItemStart = new javax.swing.JMenuItem();
         jMenuItemStop = new javax.swing.JMenuItem();
         jMenuConfiguration = new javax.swing.JMenu();
+        jMenuItemDatabase = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,6 +49,10 @@ public class ViewMain extends javax.swing.JFrame {
         jMenuBar1.add(jMenuServer);
 
         jMenuConfiguration.setText("Configuration");
+
+        jMenuItemDatabase.setText("Database");
+        jMenuConfiguration.add(jMenuItemDatabase);
+
         jMenuBar1.add(jMenuConfiguration);
 
         setJMenuBar(jMenuBar1);
@@ -67,6 +74,7 @@ public class ViewMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuConfiguration;
+    private javax.swing.JMenuItem jMenuItemDatabase;
     private javax.swing.JMenuItem jMenuItemStart;
     private javax.swing.JMenuItem jMenuItemStop;
     private javax.swing.JMenu jMenuServer;
@@ -74,6 +82,10 @@ public class ViewMain extends javax.swing.JFrame {
 
     public javax.swing.JMenuItem getjMenuItemStart() {
         return jMenuItemStart;
+    }
+
+    public JMenuItem getjMenuItemDatabase() {
+        return jMenuItemDatabase;
     }
 
     public javax.swing.JMenuItem getjMenuItemStop() {
