@@ -104,6 +104,8 @@ public class ClientThread extends Thread {
                 return getAllProductsForManufacturer((Product) requestObject.getData());
             case Operation.SAVE_CONTRACT:
                 return saveContract((Contract) requestObject.getData());
+            case Operation.IS_CONNECTED:
+                return isConnected();
         }
         return null;
     }
@@ -247,6 +249,10 @@ public class ClientThread extends Thread {
             responseObject.setErrorMessage(ex.getMessage());
         }
         return responseObject;
+    }
+
+    private ResponseObject isConnected() {
+        return new ResponseObject();
     }
 
 }
