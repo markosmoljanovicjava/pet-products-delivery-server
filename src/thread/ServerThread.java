@@ -7,11 +7,13 @@ package thread;
 
 import controller.Controller;
 import domain.User;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  *
@@ -22,7 +24,14 @@ public class ServerThread extends Thread {
     private final ServerSocket serverSocket;
 
     public ServerThread() throws IOException {
-        serverSocket = new ServerSocket(9000);
+        try (FileInputStream input = new FileInputStream("socket.properties")) {
+            Properties properties = new Properties();
+            properties.load(input);
+            Integer port = Integer.parseInt(properties.getProperty("port"));
+            serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            throw new IOException();
+        }
     }
 
     @Override

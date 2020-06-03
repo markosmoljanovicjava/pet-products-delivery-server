@@ -35,6 +35,7 @@ public class ViewMain extends javax.swing.JFrame {
         jMenuItemStop = new javax.swing.JMenuItem();
         jMenuConfiguration = new javax.swing.JMenu();
         jMenuItemDatabase = new javax.swing.JMenuItem();
+        jMenuItemCommunication = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +53,9 @@ public class ViewMain extends javax.swing.JFrame {
 
         jMenuItemDatabase.setText("Database");
         jMenuConfiguration.add(jMenuItemDatabase);
+
+        jMenuItemCommunication.setText("Communication");
+        jMenuConfiguration.add(jMenuItemCommunication);
 
         jMenuBar1.add(jMenuConfiguration);
 
@@ -74,6 +78,7 @@ public class ViewMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuConfiguration;
+    private javax.swing.JMenuItem jMenuItemCommunication;
     private javax.swing.JMenuItem jMenuItemDatabase;
     private javax.swing.JMenuItem jMenuItemStart;
     private javax.swing.JMenuItem jMenuItemStop;
@@ -91,4 +96,9 @@ public class ViewMain extends javax.swing.JFrame {
     public javax.swing.JMenuItem getjMenuItemStop() {
         return jMenuItemStop;
     }
+
+    public JMenuItem getjMenuItemCommunication() {
+        return jMenuItemCommunication;
+    }
+
 }

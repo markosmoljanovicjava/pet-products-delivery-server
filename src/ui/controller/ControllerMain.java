@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import thread.ServerThread;
+import ui.view.ViewConfigCommunication;
 import ui.view.ViewConfigDatabase;
 import ui.view.ViewMain;
 
@@ -56,6 +57,13 @@ public class ControllerMain {
             public void actionPerformed(ActionEvent e) {
                 ControllerConfigDatabase controllerConfigDatabase = new ControllerConfigDatabase(new ViewConfigDatabase());
                 controllerConfigDatabase.open();
+            }
+        });
+        viewMain.getjMenuItemCommunication().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControllerConfigCommunication controllerConfigCommunication = new ControllerConfigCommunication(new ViewConfigCommunication());
+                controllerConfigCommunication.open();
             }
         });
     }
