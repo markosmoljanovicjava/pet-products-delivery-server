@@ -25,6 +25,7 @@ import logic.SystemOperationGetAllCustomers;
 import logic.SystemOperationGetAllProducts;
 import logic.SystemOperationGetAllProductsForManufacturer;
 import logic.SystemOperationLogin;
+import logic.SystemOperationRegisterCustomer;
 import logic.SystemOperationSaveContract;
 import logic.SystemOperationUpdateProduct;
 import logic.SystsemOperationGetAllManufacturers;
@@ -106,6 +107,8 @@ public class ClientThread extends Thread {
                 return saveContract((Contract) requestObject.getData());
             case Operation.IS_CONNECTED:
                 return isConnected();
+            case Operation.REGISTER_CUSTOMER:
+                return registerCustomer((Customer) requestObject.getData());
         }
         return null;
     }
@@ -253,6 +256,21 @@ public class ClientThread extends Thread {
 
     private ResponseObject isConnected() {
         return new ResponseObject();
+    }
+
+    private ResponseObject registerCustomer(Customer customer) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            AbstractSystemOperation so = new SystemOperationRegisterCustomer(customer);
+            so.execute();
+            responseObject.setData(so.getDomainObject());
+            responseObject.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            responseObject.setStatus(ResponseStatus.ERROR);
+            responseObject.setErrorMessage(ex.getMessage());
+        }
+        return responseObject;
     }
 
 }
