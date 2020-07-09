@@ -5,6 +5,8 @@
  */
 package ui.controller;
 
+import controller.Controller;
+import ui.components.UserTableModel;
 import ui.view.ViewLoggedUsers;
 
 /**
@@ -23,6 +25,9 @@ public class ControllerLoggedUsers {
 
     private void init() {
         viewLoggedUsers.setLocationRelativeTo(null);
+
+        viewLoggedUsers.getjTableUsers().setModel(
+                new UserTableModel(Controller.getInstance().getAllUsers()));
     }
 
     void open() {

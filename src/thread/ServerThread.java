@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import util.Keys;
 
 /**
  *
@@ -67,15 +68,5 @@ public class ServerThread extends Thread {
                 System.out.println(ex.getMessage());
             }
         }
-    }
-
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-
-        for (ClientThread client : Controller.getInstance().getClients()) {
-            users.add((User) client.getMap().get("user"));
-        }
-
-        return users;
     }
 }
