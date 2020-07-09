@@ -11,6 +11,7 @@ import java.io.IOException;
 import thread.ServerThread;
 import ui.view.ViewConfigCommunication;
 import ui.view.ViewConfigDatabase;
+import ui.view.ViewLoggedUsers;
 import ui.view.ViewMain;
 
 /**
@@ -55,15 +56,25 @@ public class ControllerMain {
         viewMain.getjMenuItemDatabase().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControllerConfigDatabase controllerConfigDatabase = new ControllerConfigDatabase(new ViewConfigDatabase(viewMain, true));
+                ControllerConfigDatabase controllerConfigDatabase
+                        = new ControllerConfigDatabase(new ViewConfigDatabase(viewMain, true));
                 controllerConfigDatabase.open();
             }
         });
         viewMain.getjMenuItemCommunication().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControllerConfigCommunication controllerConfigCommunication = new ControllerConfigCommunication(new ViewConfigCommunication(viewMain, true));
+                ControllerConfigCommunication controllerConfigCommunication
+                        = new ControllerConfigCommunication(new ViewConfigCommunication(viewMain, true));
                 controllerConfigCommunication.open();
+            }
+        });
+        viewMain.getjMenuItemLoggedUsers().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControllerLoggedUsers controllerLoggedUsers
+                        = new ControllerLoggedUsers(new ViewLoggedUsers(viewMain, true));
+                controllerLoggedUsers.open();
             }
         });
     }

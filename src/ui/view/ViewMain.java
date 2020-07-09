@@ -36,6 +36,8 @@ public class ViewMain extends javax.swing.JFrame {
         jMenuConfiguration = new javax.swing.JMenu();
         jMenuItemDatabase = new javax.swing.JMenuItem();
         jMenuItemCommunication = new javax.swing.JMenuItem();
+        jMenuUsers = new javax.swing.JMenu();
+        jMenuItemLoggedUsers = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +61,13 @@ public class ViewMain extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuConfiguration);
 
+        jMenuUsers.setText("Users");
+
+        jMenuItemLoggedUsers.setText("Logged Users");
+        jMenuUsers.add(jMenuItemLoggedUsers);
+
+        jMenuBar1.add(jMenuUsers);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -80,9 +89,11 @@ public class ViewMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuConfiguration;
     private javax.swing.JMenuItem jMenuItemCommunication;
     private javax.swing.JMenuItem jMenuItemDatabase;
+    private javax.swing.JMenuItem jMenuItemLoggedUsers;
     private javax.swing.JMenuItem jMenuItemStart;
     private javax.swing.JMenuItem jMenuItemStop;
     private javax.swing.JMenu jMenuServer;
+    private javax.swing.JMenu jMenuUsers;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JMenuItem getjMenuItemStart() {
@@ -99,6 +110,10 @@ public class ViewMain extends javax.swing.JFrame {
 
     public JMenuItem getjMenuItemCommunication() {
         return jMenuItemCommunication;
+    }
+
+    public JMenuItem getjMenuItemLoggedUsers() {
+        return jMenuItemLoggedUsers;
     }
 
 }
