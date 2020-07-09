@@ -52,4 +52,12 @@ public class UserTableModel extends AbstractTableModel {
         }
     }
 
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public void refreash() {
+        fireTableDataChanged();
+    }
+
 }

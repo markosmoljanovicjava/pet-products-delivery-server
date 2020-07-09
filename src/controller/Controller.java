@@ -7,8 +7,11 @@ package controller;
 
 import domain.User;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import thread.ClientThread;
+import ui.components.UserTableModel;
 import util.Keys;
 
 /**
@@ -19,9 +22,11 @@ public class Controller {
 
     private static Controller instance;
     private final List<ClientThread> clients;
+    private final Map<Integer, Object> map;
 
     private Controller() {
         clients = new ArrayList<>();
+        map = new HashMap<>();
     }
 
     public static Controller getInstance() {
@@ -47,4 +52,16 @@ public class Controller {
 
         return users;
     }
+
+    public Map<Integer, Object> getMap() {
+        return map;
+    }
+
+    public void refreashUsersTable() {
+        List<User> users = getAllUsers();
+        UserTableModel utm = (UserTableModel) map.get(Keys.USERS_TABLE_MODEL);
+        utm.setUsers(users);
+        utm.refreash();
+    }
+
 }

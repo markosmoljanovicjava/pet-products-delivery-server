@@ -126,8 +126,9 @@ public class ClientThread extends Thread {
             responseObject.setData(user1);
             responseObject.setStatus(ResponseStatus.SUCCESS);
             map.put(Keys.USER, user1);
+            Controller.getInstance().refreashUsersTable();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex.toString());
             responseObject.setStatus(ResponseStatus.ERROR);
             responseObject.setErrorMessage(ex.getMessage());
         }

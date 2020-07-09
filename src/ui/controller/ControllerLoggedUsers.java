@@ -8,6 +8,7 @@ package ui.controller;
 import controller.Controller;
 import ui.components.UserTableModel;
 import ui.view.ViewLoggedUsers;
+import util.Keys;
 
 /**
  *
@@ -26,8 +27,8 @@ public class ControllerLoggedUsers {
     private void init() {
         viewLoggedUsers.setLocationRelativeTo(null);
 
-        viewLoggedUsers.getjTableUsers().setModel(
-                new UserTableModel(Controller.getInstance().getAllUsers()));
+        viewLoggedUsers.getjTableUsers().setModel(new UserTableModel(Controller.getInstance().getAllUsers()));
+        Controller.getInstance().getMap().put(Keys.USERS_TABLE_MODEL, viewLoggedUsers.getjTableUsers().getModel());
     }
 
     void open() {
