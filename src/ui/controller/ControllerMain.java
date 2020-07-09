@@ -73,7 +73,7 @@ public class ControllerMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ControllerLoggedUsers controllerLoggedUsers
-                        = new ControllerLoggedUsers(new ViewLoggedUsers(viewMain, true));
+                        = new ControllerLoggedUsers(new ViewLoggedUsers());
                 controllerLoggedUsers.open();
             }
         });

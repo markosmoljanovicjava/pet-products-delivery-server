@@ -11,13 +11,12 @@ import javax.swing.JTable;
  *
  * @author marko
  */
-public class ViewLoggedUsers extends javax.swing.JDialog {
+public class ViewLoggedUsers extends javax.swing.JFrame {
 
     /**
-     * Creates new form ViewLoggedUsers
+     * Creates new form NewJFrame
      */
-    public ViewLoggedUsers(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public ViewLoggedUsers() {
         initComponents();
     }
 
@@ -61,7 +60,7 @@ public class ViewLoggedUsers extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -69,7 +68,7 @@ public class ViewLoggedUsers extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

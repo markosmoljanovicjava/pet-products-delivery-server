@@ -39,7 +39,10 @@ public class Controller {
         List<User> users = new ArrayList<>();
 
         for (ClientThread client : Controller.getInstance().getClients()) {
-            users.add((User) client.getMap().get(Keys.USER));
+            User user = (User) client.getMap().get(Keys.USER);
+            if (user != null) {
+                users.add(user);
+            }
         }
 
         return users;
