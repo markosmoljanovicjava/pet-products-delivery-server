@@ -69,6 +69,7 @@ public class ClientThread extends Thread {
                         System.out.println(String.format("%s disconnected!", map.get(Keys.USER)));
                     }
                     Controller.getInstance().getClients().remove(this);
+                    Controller.getInstance().refreashUsersTable();
                 } catch (IOException ex1) {
                     ex1.printStackTrace();
                 }
