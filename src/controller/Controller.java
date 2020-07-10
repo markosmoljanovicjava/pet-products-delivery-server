@@ -58,10 +58,12 @@ public class Controller {
     }
 
     public void refreashUsersTable() {
-        List<User> users = getAllUsers();
         UserTableModel utm = (UserTableModel) map.get(Keys.USERS_TABLE_MODEL);
-        utm.setUsers(users);
-        utm.refreash();
+        if (utm != null) {
+            List<User> users = getAllUsers();
+            utm.setUsers(users);
+            utm.refreash();
+        }
     }
 
 }
